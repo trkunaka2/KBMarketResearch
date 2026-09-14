@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+
+/* Brand palette — Blueberry Cream (#5F6FA8) / Salted Caramel (#C78A3A) */
+@theme {
+  --color-blueberry-50: #f5f6fa;
+  --color-blueberry-100: #e8eaf2;
+  --color-blueberry-150: #d7dbe9;
+  --color-blueberry-200: #bdc4db;
+  --color-blueberry-300: #9ca6c9;
+  --color-blueberry-400: #7b88b7;
+  --color-blueberry-450: #8896c9;
+  --color-blueberry-500: #5f6fa8;
+  --color-blueberry-600: #4b598b;
+  --color-blueberry-700: #3b466d;
+  --color-blueberry-800: #2b334f;
+  --color-blueberry-900: #1d2235;
+  --color-blueberry-950: #14131c;
+
+  --color-caramel-50: #fcf8f3;
+  --color-caramel-100: #f7eee3;
+  --color-caramel-150: #f1e3cf;
+  --color-caramel-200: #e8d0b0;
+  --color-caramel-300: #ddb888;
+  --color-caramel-400: #d2a160;
+  --color-caramel-450: #d9a663;
+  --color-caramel-500: #c78a3a;
+  --color-caramel-600: #a7732f;
+  --color-caramel-700: #835a25;
+  --color-caramel-800: #5f421b;
+  --color-caramel-900: #402c12;
+}
+
+:root {
+  color-scheme: light dark;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--color-blueberry-50);
+  color: #17161f;
+  overscroll-behavior-y: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: var(--color-blueberry-950);
+    color: #f3f2f8;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-blueberry-200);
+  border-radius: 8px;
+}
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-blueberry-800);
+  }
+}
