@@ -3,6 +3,8 @@
 An installable web app for capturing and tracking Kestrel Bags' tote bag market
 research, on the go — no signal required.
 
+**Live app:** https://trkunaka2.github.io/KBMarketResearch/ (deploys automatically from `main`)
+
 ## What it does
 
 - **New response** — a mobile-first form matching the 15-question tote bag
