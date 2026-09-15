@@ -1,11 +1,16 @@
 import { QUESTIONS } from '../data/questions'
-import type { Entry } from '../types'
+import { RECORDERS, type Entry, type Recorder } from '../types'
+
+function toRecorder(value: string): Recorder {
+  return (RECORDERS as readonly string[]).includes(value) ? (value as Recorder) : 'Other'
+}
 
 const OTHER_IDS = QUESTIONS.filter((q) => 'otherId' in q && q.otherId).map((q) => (q as { otherId: string }).otherId)
 
 const COLUMNS: { key: string; header: string }[] = [
   { key: 'id', header: 'ID' },
   { key: 'createdAt', header: 'Collected at' },
+  { key: 'recordedBy', header: 'Recorded by' },
   ...QUESTIONS.map((q) => ({ key: q.id, header: `Q${q.number}. ${q.prompt}` })),
   ...OTHER_IDS.map((id) => ({ key: id, header: `${id} (other, detail)` })),
   { key: 'notes', header: 'Notes' },
@@ -14,6 +19,7 @@ const COLUMNS: { key: string; header: string }[] = [
 function cell(entry: Entry, key: string): string {
   if (key === 'id') return entry.id
   if (key === 'createdAt') return entry.createdAt
+  if (key === 'recordedBy') return entry.recordedBy
   if (key === 'notes') return entry.notes ?? ''
   const v = entry.answers[key]
   if (v === undefined) return ''
@@ -114,12 +120,14 @@ export function csvToEntries(text: string): Entry[] {
     const answers: Entry['answers'] = {}
     let id = ''
     let createdAt = ''
+    let recordedBy = ''
     let notes: string | undefined
     row.forEach((raw, idx) => {
       const key = keyByIndex[idx]
       if (!key) return
       if (key === 'id') id = raw
       else if (key === 'createdAt') createdAt = raw
+      else if (key === 'recordedBy') recordedBy = raw
       else if (key === 'notes') notes = raw || undefined
       else if (raw !== '') {
         if (BOOL_QUESTION_IDS.has(key)) answers[key] = raw.toLowerCase() === 'yes'
@@ -130,6 +138,7 @@ export function csvToEntries(text: string): Entry[] {
     return {
       id: id || crypto.randomUUID(),
       createdAt: createdAt || new Date().toISOString(),
+      recordedBy: toRecorder(recordedBy),
       notes,
       answers,
     }
@@ -139,5 +148,5 @@ export function csvToEntries(text: string): Entry[] {
 export function jsonToEntries(text: string): Entry[] {
   const parsed = JSON.parse(text)
   if (!Array.isArray(parsed)) throw new Error('Expected a JSON array of entries')
-  return parsed
+  return parsed.map((e) => ({ ...e, recordedBy: toRecorder(e.recordedBy ?? '') }))
 }

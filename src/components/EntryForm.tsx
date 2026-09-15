@@ -1,6 +1,6 @@
 import { useMemo, useState, type FormEvent } from 'react'
 import { QUESTIONS } from '../data/questions'
-import type { AnswerValue } from '../types'
+import type { AnswerValue, Recorder } from '../types'
 import type { Entry } from '../types'
 import { isVisible } from '../lib/answers'
 import { QuestionField } from './QuestionField'
@@ -8,6 +8,7 @@ import { QuestionField } from './QuestionField'
 interface Props {
   onSave: (entry: Entry) => void
   entryCount: number
+  recordedBy: Recorder
 }
 
 function newId() {
@@ -15,7 +16,7 @@ function newId() {
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`
 }
 
-export function EntryForm({ onSave, entryCount }: Props) {
+export function EntryForm({ onSave, entryCount, recordedBy }: Props) {
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>({})
   const [notes, setNotes] = useState('')
   const [savedFlash, setSavedFlash] = useState(false)
@@ -47,6 +48,7 @@ export function EntryForm({ onSave, entryCount }: Props) {
     const entry: Entry = {
       id: newId(),
       createdAt: new Date().toISOString(),
+      recordedBy,
       notes: notes.trim() || undefined,
       answers: cleanedAnswers,
     }

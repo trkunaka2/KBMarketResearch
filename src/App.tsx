@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { EntryForm } from './components/EntryForm'
 import { Dashboard } from './components/Dashboard'
-import { useEntries, useSettings } from './lib/storage'
+import { UserGate } from './components/UserGate'
+import { useCurrentUser, useEntries, useSettings } from './lib/storage'
 
 type Tab = 'entry' | 'dashboard'
 
@@ -25,15 +26,33 @@ export default function App() {
   const [tab, setTab] = useState<Tab>('entry')
   const { entries, addEntry, deleteEntry, importEntries } = useEntries()
   const { settings, updateGoal } = useSettings()
+  const { currentUser, setCurrentUser } = useCurrentUser()
+
+  if (!currentUser) {
+    return <UserGate onSelect={setCurrentUser} />
+  }
 
   return (
     <div
       className="flex flex-col bg-blueberry-50 dark:bg-blueberry-950"
       style={{ height: '100svh', paddingTop: 'env(safe-area-inset-top, 0px)' }}
     >
+      <div className="flex shrink-0 items-center justify-between border-b border-neutral-200 bg-white/80 px-4 py-1.5 text-xs backdrop-blur dark:border-neutral-800 dark:bg-neutral-950/80">
+        <span className="text-neutral-500 dark:text-neutral-400">
+          Recording as <span className="font-medium text-neutral-800 dark:text-neutral-100">{currentUser}</span>
+        </span>
+        <button
+          type="button"
+          onClick={() => setCurrentUser(null)}
+          className="font-medium text-caramel-600 dark:text-caramel-450"
+        >
+          Switch user
+        </button>
+      </div>
+
       <main className="flex-1 overflow-y-auto">
         {tab === 'entry' ? (
-          <EntryForm onSave={addEntry} entryCount={entries.length} />
+          <EntryForm onSave={addEntry} entryCount={entries.length} recordedBy={currentUser} />
         ) : (
           <Dashboard
             entries={entries}

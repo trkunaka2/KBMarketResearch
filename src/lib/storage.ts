@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
-import type { Entry, Settings } from '../types'
+import type { Entry, Recorder, Settings } from '../types'
 
 const ENTRIES_KEY = 'kb-market-research:entries'
 const SETTINGS_KEY = 'kb-market-research:settings'
+const CURRENT_USER_KEY = 'kb-market-research:currentUser'
 
 const DEFAULT_SETTINGS: Settings = { goal: 50 }
 
@@ -86,4 +87,21 @@ export function useSettings() {
   }, [])
 
   return { settings, updateGoal }
+}
+
+function readCurrentUser(): Recorder | null {
+  const raw = localStorage.getItem(CURRENT_USER_KEY)
+  return raw === 'Stephanie' || raw === 'Tendayi' || raw === 'Other' ? raw : null
+}
+
+export function useCurrentUser() {
+  const [currentUser, setCurrentUserState] = useState<Recorder | null>(() => readCurrentUser())
+
+  const setCurrentUser = useCallback((user: Recorder | null) => {
+    if (user) localStorage.setItem(CURRENT_USER_KEY, user)
+    else localStorage.removeItem(CURRENT_USER_KEY)
+    setCurrentUserState(user)
+  }, [])
+
+  return { currentUser, setCurrentUser }
 }

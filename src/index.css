@@ -1,5 +1,13 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Alex Brush';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/alex-brush-latin.woff2') format('woff2');
+}
+
 /* Brand palette — Blueberry Cream (#5F6FA8) / Salted Caramel (#C78A3A) */
 @theme {
   --color-blueberry-50: #f5f6fa;
@@ -71,5 +79,47 @@ body {
 @media (prefers-color-scheme: dark) {
   ::-webkit-scrollbar-thumb {
     background: var(--color-blueberry-800);
+  }
+}
+
+/* Kestrel Bags wordmark: drops in, then reveals left-to-right like handwriting */
+.kestrel-wordmark {
+  font-family: 'Alex Brush', cursive;
+}
+
+.kestrel-wordmark-drop {
+  animation: kestrel-drop 550ms ease-out both;
+}
+
+.kestrel-wordmark-write {
+  display: inline-block;
+  clip-path: inset(0 100% 0 0);
+  animation: kestrel-write 1500ms 400ms cubic-bezier(0.65, 0.05, 0.36, 1) both;
+}
+
+@keyframes kestrel-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes kestrel-write {
+  to {
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kestrel-wordmark-drop,
+  .kestrel-wordmark-write {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: inset(0 0 0 0) !important;
   }
 }

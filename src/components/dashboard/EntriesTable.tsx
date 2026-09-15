@@ -36,7 +36,9 @@ export function EntriesTable({ entries, onDelete }: Props) {
                   <p className="truncate text-sm font-medium text-neutral-800 dark:text-neutral-100">
                     {answers[0]?.value ?? 'Response'}
                   </p>
-                  <p className="text-xs text-neutral-400 dark:text-neutral-500">{formatDate(entry.createdAt)}</p>
+                  <p className="text-xs text-neutral-400 dark:text-neutral-500">
+                    {formatDate(entry.createdAt)} · {entry.recordedBy}
+                  </p>
                 </div>
                 <span className="shrink-0 text-xs text-blueberry-600 dark:text-blueberry-300">
                   {open ? 'Hide' : 'View'}
@@ -46,6 +48,12 @@ export function EntriesTable({ entries, onDelete }: Props) {
               {open && (
                 <div className="border-t border-neutral-100 bg-blueberry-50/50 px-4 py-3 dark:border-neutral-800 dark:bg-blueberry-500/5">
                   <dl className="space-y-2">
+                    <div>
+                      <dt className="text-[11px] font-medium uppercase tracking-wide text-neutral-400 dark:text-neutral-500">
+                        Recorded by
+                      </dt>
+                      <dd className="text-[13px] text-neutral-700 dark:text-neutral-200">{entry.recordedBy}</dd>
+                    </div>
                     {answers.map((a) => (
                       <div key={a.number + a.prompt}>
                         <dt className="text-[11px] font-medium uppercase tracking-wide text-neutral-400 dark:text-neutral-500">
