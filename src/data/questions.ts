@@ -57,7 +57,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'priceRange',
     number: 3,
-    type: 'single',
+    type: 'multi',
     prompt: 'How much are you willing to pay for a high quality tote bag?',
     options: ['Under R150', 'R150–R249', 'R250–R399', 'R400–R500', 'R600+'],
   },
@@ -70,7 +70,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'styleVsFunction',
     number: 4,
-    type: 'single',
+    type: 'multi',
     prompt:
       'Would you rather have an aesthetically pleasing bag with fewer practical features, or a highly functional tote bag with a simple design?',
     options: [
@@ -136,7 +136,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'sizePreference',
     number: 11,
-    type: 'single',
+    type: 'multi',
     prompt: 'What size tote bag would you prefer?',
     options: [
       'Small – essentials only',
@@ -148,7 +148,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'usageFrequency',
     number: 12,
-    type: 'single',
+    type: 'multi',
     prompt: 'How often do you use a tote bag?',
     options: ['Daily', 'A few times a week', 'Weekly', 'Occasionally', 'Rarely', 'Never'],
   },
@@ -179,7 +179,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'stylePreference',
     number: 15,
-    type: 'single',
+    type: 'multi',
     prompt: 'What style of tote bag would you be most interested in?',
     options: ['Minimalistic', 'Trend forward', 'Classic', 'Sporty', 'Luxurious', 'Artistic/unique'],
   },
